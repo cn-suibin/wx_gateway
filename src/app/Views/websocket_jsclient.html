@@ -1,0 +1,37 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script>
+var wsServer = 'ws://121.42.162.48:8081';
+var websocket = new WebSocket(wsServer); 
+websocket.onopen = function (evt) { 
+	console.log("Connected to WebSocket server.");
+}; 
+
+websocket.onclose = function (evt) { 
+	console.log("Disconnected"); 
+}; 
+
+websocket.onmessage = function (evt) { 
+
+
+var node=document.createElement("LI");
+var textnode=document.createTextNode(evt.data);
+node.appendChild(textnode);
+document.getElementById("myList").appendChild(node);
+	//console.log('Retrieved data from server: ' + evt.data); 
+}; 
+
+websocket.onerror = function (evt, e) {
+	console.log('Error occured: ' + evt.data);
+};
+function func(){
+//alert(1);
+//websocket.send("hello");
+var tx=document.getElementById("tx").value;
+websocket.send('{"controller_name":"MtestController","method_name":"testTcp","data":"{\\"UID\\":\\"udwggwlllffww83g\\",\\"CID\\":\\"A01034\\",\\"msg\\":\\"'+tx+'\\"}"}');
+}
+</script>
+<input id="tx"></input>
+<button onclick="func();">click</button>
+
+<ul id="myList"><li>当前工程师ID：A01034</li><li>进入的微信用户：张三</li><li>openid；udwggwlllffww83g</li><li>------------------------------------</li></ul>
+
